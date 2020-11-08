@@ -52,12 +52,14 @@ def upload_file():
                                     filename=filename))
     return '''
     <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
+    <body style="background-color:lightgray;">
+        <title>Upload new File</title>
+        <h1>Upload new File</h1>
+        <form method=post enctype=multipart/form-data>
+          <input type=file name=file>
+          <input type=submit value=Upload>
+        </form>
+    </body>
     '''
 
 @app.route('/image')
@@ -87,9 +89,16 @@ def image():
 
     return '''
     <!doctype html>
-    <title>Image data:</title>
-    <h1>Image data:</h1>
-    ''' + str(analysis) + '<br>'
+    <body style="background-color:lightgray;">
+        <title>Image data:</title>
+        <h1>Image data:</h1>
+        ''' + str(analysis) + '''
+        <br>
+        <br>
+        <h3>Currency converter:</h3>
+        <iframe width="175" height="202" id="themoneyconverter-mini" src="https://themoneyconverter.com/MoneyConverter?from=EUR&amp;to=USD" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" seamless="seamless"></iframe>
+    </body>
+    '''
 
 
 
