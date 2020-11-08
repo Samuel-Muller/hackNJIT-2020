@@ -53,7 +53,7 @@ def upload_file():
     return '''
     <!doctype html>
     <body style="background-color:lightgray;">
-        <img src = "/static/compass.jpg" alt="Logo" height="200" width="200">
+        <img src = "/static/compass.png" alt="Logo" height="200" width="200">
         <title>Upload image to analyze</title>
         <h1>Upload image to analyze</h1>
         <form method=post enctype=multipart/form-data>
@@ -94,7 +94,7 @@ def image():
     return '''
     <!doctype html>
     <body style="background-color:lightgray;">
-        <img src = "/static/compass.jpg" alt="Logo" height="200" width="200">
+        <img src = "/static/compass.png" alt="Logo" height="200" width="200">
         <title>Image data:</title>
         <h1>Image data:</h1>
         ''' + str(analysis) + '''
