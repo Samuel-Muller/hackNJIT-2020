@@ -4,13 +4,16 @@ from azure.cognitiveservices.vision.computervision import ComputerVisionClient
 from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
 from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
 from msrest.authentication import CognitiveServicesCredentials
+#import matplotlib.pyplot as plt #having some trouble with installing matplotlib
+from io import BytesIO
 
 from array import array
 import os
-#from PIL import Image
+from PIL import Image
 import sys
 import time
 from werkzeug.utils import secure_filename
+import requests
 
 UPLOAD_FOLDER = 'D:\git\hackNJIT\\uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -61,10 +64,39 @@ def upload_file():
 def image():
     
     filename = request.args.get('filename')
-    
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+    analyze_url = endpoint + "vision/v3.1/analyze"
+
+
+    # Read the image into a byte array
+    image_data = open(image_path, "rb").read()
+    headers = {'Ocp-Apim-Subscription-Key': subscription_key,
+               'Content-Type': 'application/octet-stream'}
+    params = {'visualFeatures': 'Objects'}
+    response = requests.post(
+        analyze_url, headers=headers, params=params, data=image_data)
+    response.raise_for_status()
+
+    # The 'analysis' object contains various fields that describe the image. The most
+    # relevant caption for the image is obtained from the 'description' property.
+    analysis = response.json()
+    print(analysis)
+    #image_caption = analysis["description"]["captions"][0]["text"].capitalize()
+    objects = analysis["objects"]
+
+    return '''
+    <!doctype html>
+    <title>Image data:</title>
+    <h1>Image data:</h1>
+    ''' + str(analysis) + '<br>'
+
+
+
+'''
     print("===== Detect Objects - remote =====")
     # Get URL image with different objects
-    remote_image_url_objects = "https://images.immediate.co.uk/production/volatile/sites/30/2017/01/Bananas-218094b-scaled.jpg"
+    remote_image_url_objects = image_path #"https://images.immediate.co.uk/production/volatile/sites/30/2017/01/Bananas-218094b-scaled.jpg"
     # Call API with URL
     detect_objects_results_remote = computervision_client.detect_objects(remote_image_url_objects)
 
@@ -79,4 +111,4 @@ def image():
         for object in objects:
             print(object)
     
-    return objects[0]#"this was supposed to analyze an image"
+    return objects[0]#"this was supposed to analyze an image"'''
