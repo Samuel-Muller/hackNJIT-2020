@@ -12,7 +12,7 @@ import sys
 import time
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'D:\git\hackNJIT'
+UPLOAD_FOLDER = 'D:\git\hackNJIT\\uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
@@ -45,7 +45,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('upload_file',
+            return redirect(url_for('image',
                                     filename=filename))
     return '''
     <!doctype html>
@@ -58,10 +58,9 @@ def upload_file():
     '''
 
 @app.route('/image')
-def recognizeImage():
+def image():
     
-    #Detect Objects - remote
-    #This example detects different kinds of objects with bounding boxes in a remote image.
+    filename = request.args.get('filename')
     
     print("===== Detect Objects - remote =====")
     # Get URL image with different objects
