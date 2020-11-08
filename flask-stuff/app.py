@@ -53,12 +53,16 @@ def upload_file():
     return '''
     <!doctype html>
     <body style="background-color:lightgray;">
-        <title>Upload new File</title>
-        <h1>Upload new File</h1>
+        <img src = "/static/compass.jpg" alt="Logo" height="200" width="200">
+        <title>Upload image to analyze</title>
+        <h1>Upload image to analyze</h1>
         <form method=post enctype=multipart/form-data>
           <input type=file name=file>
           <input type=submit value=Upload>
         </form>
+        <br>
+        <br>
+        <iframe width="175" height="202" id="themoneyconverter-mini" src="https://themoneyconverter.com/MoneyConverter?from=EUR&amp;to=USD" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" seamless="seamless"></iframe>
     </body>
     '''
 
@@ -90,6 +94,7 @@ def image():
     return '''
     <!doctype html>
     <body style="background-color:lightgray;">
+        <img src = "/static/compass.jpg" alt="Logo" height="200" width="200">
         <title>Image data:</title>
         <h1>Image data:</h1>
         ''' + str(analysis) + '''
@@ -99,25 +104,3 @@ def image():
         <iframe width="175" height="202" id="themoneyconverter-mini" src="https://themoneyconverter.com/MoneyConverter?from=EUR&amp;to=USD" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" seamless="seamless"></iframe>
     </body>
     '''
-
-
-
-'''
-    print("===== Detect Objects - remote =====")
-    # Get URL image with different objects
-    remote_image_url_objects = image_path #"https://images.immediate.co.uk/production/volatile/sites/30/2017/01/Bananas-218094b-scaled.jpg"
-    # Call API with URL
-    detect_objects_results_remote = computervision_client.detect_objects(remote_image_url_objects)
-
-    # Print detected objects results with bounding boxes
-    print("Detecting objects in remote image:")
-    objects = []
-    if len(detect_objects_results_remote.objects) == 0:
-        print("No objects detected.")
-    else:
-        for object in detect_objects_results_remote.objects:
-            objects += [str(object.object_property)]
-        for object in objects:
-            print(object)
-    
-    return objects[0]#"this was supposed to analyze an image"'''
